@@ -1,5 +1,7 @@
 extends Node2D
 
+signal card_used
+
 var suits = ["H", "D", "C", "S"]
 var ranks = ["2", "3", "4", "5", "6", "7", "8", "9", "10", "J", "Q", "K", "A"]
 
@@ -84,7 +86,8 @@ func _ready():
 
 
 func use_card() -> void:
-	$"..".visible = false  # Hide the card
+	visible = false # Hide the card itself not the parent node
+	emit_signal("card_used", self)
 
 func _on_area_2d_input_event(viewport: Node, event: InputEvent, shape_idx: int) -> void:
 	if event is InputEventMouseButton and event.pressed and event.button_index == MOUSE_BUTTON_LEFT:

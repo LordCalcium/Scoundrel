@@ -1,23 +1,27 @@
-[gd_scene load_steps=3 format=3 uid="uid://l6juij4nnxt0"]
+[gd_scene load_steps=4 format=3 uid="uid://l6juij4nnxt0"]
 
+[ext_resource type="Script" uid="uid://c3hjnrpie0ubn" path="res://Scripts/game_manager.gd" id="1_8gbba"]
 [ext_resource type="Script" uid="uid://m3200r2g138x" path="res://Scripts/card_manager.gd" id="1_bo1nx"]
 [ext_resource type="Texture2D" uid="uid://rmvtwxlolbuy" path="res://Sprites/card-back1.png" id="2_8gbba"]
 
 [node name="main" type="Node2D"]
+script = ExtResource("1_8gbba")
 
 [node name="card_manager" type="Node2D" parent="."]
 script = ExtResource("1_bo1nx")
 
-[node name="card_slot_1" type="Node2D" parent="card_manager"]
+[node name="card_container" type="Node2D" parent="card_manager"]
+
+[node name="card_slot_1" type="Node2D" parent="card_manager/card_container"]
 position = Vector2(382, 170)
 
-[node name="card_slot_2" type="Node2D" parent="card_manager"]
+[node name="card_slot_2" type="Node2D" parent="card_manager/card_container"]
 position = Vector2(516, 170)
 
-[node name="card_slot_3" type="Node2D" parent="card_manager"]
+[node name="card_slot_3" type="Node2D" parent="card_manager/card_container"]
 position = Vector2(644, 170)
 
-[node name="card_slot_4" type="Node2D" parent="card_manager"]
+[node name="card_slot_4" type="Node2D" parent="card_manager/card_container"]
 position = Vector2(777, 170)
 
 [node name="card_deck" type="Sprite2D" parent="."]
@@ -29,7 +33,7 @@ offset_left = 178.0
 offset_top = 276.0
 offset_right = 251.0
 offset_bottom = 307.0
-text = "Random
+text = "Start
 "
 
-[connection signal="pressed" from="Button" to="card_manager" method="press_random"]
+[connection signal="pressed" from="Button" to="card_manager" method="_init_random_cards"]
