@@ -1,6 +1,7 @@
 extends Node2D
 
 signal card_used
+signal card_selected(card)
 
 var suits = ["H", "D", "C", "S"]
 var ranks = ["2", "3", "4", "5", "6", "7", "8", "9", "10", "J", "Q", "K", "A"]
@@ -91,4 +92,15 @@ func use_card() -> void:
 
 func _on_area_2d_input_event(viewport: Node, event: InputEvent, shape_idx: int) -> void:
 	if event is InputEventMouseButton and event.pressed and event.button_index == MOUSE_BUTTON_LEFT:
-		button.visible = !button.visible  # Toggle button visibility
+		emit_signal("card_selected", self)
+
+func show_use_button():
+	button.visible = true
+
+func hide_use_button():
+	button.visible = false
+
+func _on_use_pressed():
+	# Optional: emit a signal for the card_manager to know this card was used
+	print("Use pressed on:", self.name)
+	get_parent().emit_signal("card_used", self)
