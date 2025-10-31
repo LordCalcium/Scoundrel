@@ -1,8 +1,10 @@
 extends Node2D
 
 var cardScene = preload("res://Scenes/card.tscn")
-var active_cards = []
-var used_cards_count = 0
+
+var full_deck: Array = []
+var active_cards: Array = []
+var used_cards_count := 0
 var selected_card: Node = null
 
 @onready var card_container = $card_container
@@ -12,63 +14,114 @@ var selected_card: Node = null
 	$card_container/card_slot_3,
 	$card_container/card_slot_4
 ]
+@onready var deck_count_label = $deck_count
 
 
-# --- SPAWN & DISPLAY CARDS ---
+# --- CREATE & FILTER DECK ---
+func _create_full_deck() -> Array:
+	var suits = ["H", "D", "C", "S"]
+	var ranks = ["2", "3", "4", "5", "6", "7", "8", "9", "10", "J", "Q", "K", "A"]
+	var deck = []
+	for suit in suits:
+		for rank in ranks:
+			deck.append(rank + suit)
+
+	# Remove red faces & aces
+	var filtered = []
+	for card in deck:
+		var suit = card.substr(card.length() - 1)
+		var rank = card.substr(0, card.length() - 1)
+		if (suit == "H" or suit == "D") and (rank in ["J", "Q", "K", "A"]):
+			continue
+		filtered.append(card)
+	return filtered
+
+
+# --- DRAW CARDS ---
+func _draw_cards_from_deck(amount: int) -> Array:
+	if full_deck.size() < amount:
+		amount = full_deck.size()
+	var drawn = []
+	for i in range(amount):
+		var idx = randi() % full_deck.size()
+		drawn.append(full_deck[idx])
+		full_deck.remove_at(idx)
+	_update_deck_label() 
+	return drawn
+
+
+# --- UPDATE DECK LABEL ---
+func _update_deck_label():
+	if full_deck.is_empty() :
+		deck_count_label.text = "0"
+	else:
+		deck_count_label.text = "%d" % full_deck.size()
+
+
+# --- SPAWN CARDS ---
 func spawn_cards():
 	if active_cards.size() > 0:
-		print("Wait! You must use all current cards before drawing new ones.")
+		print("Wait! Use all cards first.")
+		return
+	if full_deck.is_empty():
+		print("No more cards left in the deck!")
+		_update_deck_label()
 		return
 
-	used_cards_count = 0 # Reset
+	var drawn_cards = _draw_cards_from_deck(4)
+	print("Cards drawn this round:", drawn_cards)
 
-	for i in range(card_slots.size()):
+	for i in range(drawn_cards.size()):
 		var card_instance = cardScene.instantiate()
-		card_container.add_child(card_instance)  # Add to container
-		card_instance.position = card_slots[i].position  # Position at slot
+		card_container.add_child(card_instance)
+		card_instance.position = card_slots[i].position
 
-		# Connect signals immediately after creating the card
 		card_instance.connect("card_used", Callable(self, "_on_card_used"))
 		card_instance.connect("card_selected", Callable(self, "_on_card_selected"))
+		card_instance.set_card(drawn_cards[i])
 		active_cards.append(card_instance)
 
-	# Print all card values to simulate dealer knowledge
-	for card in active_cards:
-		print("Dealer sees card: %s (value: %d)" % [card.chosen_card, card.card_value])
+	_update_deck_label()
 
-# Count used cards
-func _on_card_used(card):
-	used_cards_count += 1
-	print("Card used: %s (%d/%d used)" % [card.chosen_card, used_cards_count, active_cards.size()])
 
-	if used_cards_count >= active_cards.size():
-		print("All cards used. You can now draw new cards.")
-		_clear_cards()  # remove or reset old cards
-
-# Once all cards are used, clear them
+# --- CLEAR CARDS ---
 func _clear_cards():
 	for card in active_cards:
 		if is_instance_valid(card):
 			card.queue_free()
 	active_cards.clear()
+	used_cards_count = 0
 
-# Button Node to start
-func _init_random_cards() -> void:
-	spawn_cards()
 
+# --- CARD USED ---
+func _on_card_used(card):
+	used_cards_count += 1
+	print("Card used: %s (%d/%d used)" % [card.chosen_card, used_cards_count, active_cards.size()])
+
+	if used_cards_count >= active_cards.size():
+		print("All cards used. Next round!")
+		_clear_cards()
+		spawn_cards()
+
+
+# --- CARD SELECTED ---
 func _on_card_selected(card):
-	# If the same card is clicked again → toggle off
 	if selected_card == card:
 		card.hide_use_button()
 		selected_card = null
 		print("Deselected card:", card.chosen_card)
 		return
-
-	# Hide previous card’s button (if different card selected)
 	if selected_card and selected_card != card:
 		selected_card.hide_use_button()
-
-	# Show new card’s button
 	selected_card = card
 	selected_card.show_use_button()
 	print("Selected card:", card.chosen_card)
+
+
+# --- GAME START ---
+func _start_game() -> void:
+	randomize()
+	full_deck = _create_full_deck()
+	print("Game start: deck created with %d cards." % full_deck.size())
+	_update_deck_label()
+	spawn_cards()
