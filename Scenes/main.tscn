@@ -2,6 +2,7 @@
 
 [ext_resource type="Script" uid="uid://m3200r2g138x" path="res://Scripts/card_manager.gd" id="1_bo1nx"]
 [ext_resource type="Texture2D" uid="uid://rmvtwxlolbuy" path="res://Sprites/card-back1.png" id="2_8gbba"]
+[ext_resource type="FontFile" uid="uid://n5jft252lqeg" path="res://Sprites/OldLondon.ttf" id="3_8gbba"]
 
 [node name="main" type="Node2D"]
 
@@ -33,5 +34,20 @@ offset_right = 251.0
 offset_bottom = 307.0
 text = "Start
 "
+
+[node name="remain_cards" type="Label" parent="."]
+offset_left = 185.0
+offset_top = 101.0
+offset_right = 241.0
+offset_bottom = 233.0
+theme_override_colors/font_color = Color(0.9647059, 0.8627451, 0.6862745, 1)
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
+theme_override_colors/font_outline_color = Color(0.09803922, 0.023529412, 0.34117648, 1)
+theme_override_constants/outline_size = 10
+theme_override_fonts/font = ExtResource("3_8gbba")
+theme_override_font_sizes/font_size = 64
+text = "44"
+horizontal_alignment = 1
+vertical_alignment = 1
 
 [connection signal="pressed" from="Button" to="card_manager" method="_init_random_cards"]
