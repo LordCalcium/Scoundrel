@@ -15,6 +15,7 @@ var selected_card: Node = null
 	$card_container/card_slot_4
 ]
 @onready var deck_count_label = $deck_count
+@onready var start_button = $start_button
 
 
 # --- CREATE & FILTER DECK ---
@@ -118,10 +119,12 @@ func _on_card_selected(card):
 	print("Selected card:", card.chosen_card)
 
 
-# --- GAME START ---
-func _start_game() -> void:
+# --- START BUTTON PRESSED ---
+func _press_start_button() -> void:
+	start_button.visible = false
 	randomize()
 	full_deck = _create_full_deck()
 	print("Game start: deck created with %d cards." % full_deck.size())
 	_update_deck_label()
 	spawn_cards()
+
