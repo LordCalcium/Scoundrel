@@ -21,7 +21,7 @@ func set_card(card_code: String):
 	chosen_card = card_code
 	card_value = calculate_card_value(card_code)
 	set_card_texture(card_code)
-	print("Card initialized:", chosen_card, "Value:", card_value)
+	print("Card initialized:", chosen_card, " Value:", card_value)
 
 
 # --- CALCULATE VALUE ---
@@ -31,10 +31,6 @@ func calculate_card_value(card: String) -> int:
 	var base_value = 0
 
 	match rank:
-		"J": base_value = 10
-		"Q": base_value = 11
-		"K": base_value = 12
-		"A": base_value = 13
 		_: base_value = int(rank)
 
 	if suit in ["H", "D"]:

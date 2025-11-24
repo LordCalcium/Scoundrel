@@ -21,7 +21,7 @@ var selected_card: Node = null
 # --- CREATE & FILTER DECK ---
 func _create_full_deck() -> Array:
 	var suits = ["H", "D", "C", "S"]
-	var ranks = ["2", "3", "4", "5", "6", "7", "8", "9", "10", "J", "Q", "K", "A"]
+	var ranks = ["2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14"]
 	var deck = []
 	for suit in suits:
 		for rank in ranks:
@@ -32,7 +32,7 @@ func _create_full_deck() -> Array:
 	for card in deck:
 		var suit = card.substr(card.length() - 1)
 		var rank = card.substr(0, card.length() - 1)
-		if (suit == "H" or suit == "D") and (rank in ["J", "Q", "K", "A"]):
+		if (suit == "H" or suit == "D") and (rank in ["11", "12", "13", "14"]):
 			continue
 		filtered.append(card)
 	return filtered
@@ -61,9 +61,6 @@ func _update_deck_label():
 
 # --- SPAWN CARDS ---
 func spawn_cards():
-	if active_cards.size() > 0:
-		print("Wait! Use all cards first.")
-		return
 	if full_deck.is_empty():
 		print("No more cards left in the deck!")
 		_update_deck_label()
@@ -85,6 +82,7 @@ func spawn_cards():
 	_update_deck_label()
 
 
+
 # --- CLEAR CARDS ---
 func _clear_cards():
 	for card in active_cards:
@@ -103,6 +101,7 @@ func _on_card_used(card):
 		print("All cards used. Next round!")
 		_clear_cards()
 		spawn_cards()
+		print(full_deck)
 
 
 # --- CARD SELECTED ---
@@ -118,12 +117,16 @@ func _on_card_selected(card):
 	selected_card.show_use_button()
 	print("Selected card:", card.chosen_card)
 
+func _ready() -> void:
+	randomize()
+	full_deck = _create_full_deck()
+	print(full_deck)
 
 # --- GAME START ---
 func press_start_button() -> void:
 	start_button.visible = false
-	randomize()
-	full_deck = _create_full_deck()
 	print("Game start: deck created with %d cards." % full_deck.size())
 	_update_deck_label()
 	spawn_cards()
+	print(full_deck)
+
