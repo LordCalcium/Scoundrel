@@ -51,4 +51,4 @@ position = Vector2(777, 170)
 position = Vector2(213, 170)
 texture = ExtResource("2_8gbba")
 
-[connection signal="pressed" from="card_manager/start_button" to="card_manager" method="_press_start_button"]
+[connection signal="pressed" from="card_manager/start_button" to="card_manager" method="press_start_button"]
