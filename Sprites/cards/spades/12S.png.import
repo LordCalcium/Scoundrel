@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://djjhr8u0v6d0a"
-path="res://.godot/imported/JS.png-76f1fa56436f0c3451725a014c2401b2.ctex"
+uid="uid://bs87youhxvo3n"
+path="res://.godot/imported/12S.png-7f6d907c2819e6f91cc628af64f4eda8.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Sprites/cards/spades/JS.png"
-dest_files=["res://.godot/imported/JS.png-76f1fa56436f0c3451725a014c2401b2.ctex"]
+source_file="res://Sprites/cards/spades/12S.png"
+dest_files=["res://.godot/imported/12S.png-7f6d907c2819e6f91cc628af64f4eda8.ctex"]
 
 [params]
 

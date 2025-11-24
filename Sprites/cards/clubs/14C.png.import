@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://cj6umb3pcw1a"
-path="res://.godot/imported/KC.png-75c0e664a015d45ac1ece59fe45f84ba.ctex"
+uid="uid://bepfreh4l4qf4"
+path="res://.godot/imported/14C.png-49383ed29af436a4b171b103e963f675.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Sprites/cards/clubs/KC.png"
-dest_files=["res://.godot/imported/KC.png-75c0e664a015d45ac1ece59fe45f84ba.ctex"]
+source_file="res://Sprites/cards/clubs/14C.png"
+dest_files=["res://.godot/imported/14C.png-49383ed29af436a4b171b103e963f675.ctex"]
 
 [params]
 

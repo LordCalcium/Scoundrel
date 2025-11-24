@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://dy6j7xib24l4x"
-path="res://.godot/imported/JC.png-ee8762d5242fa4f31db91f4024b1028a.ctex"
+uid="uid://cj6umb3pcw1a"
+path="res://.godot/imported/13C.png-1cf824e34f606ae98a81ca309d36dd11.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Sprites/cards/clubs/JC.png"
-dest_files=["res://.godot/imported/JC.png-ee8762d5242fa4f31db91f4024b1028a.ctex"]
+source_file="res://Sprites/cards/clubs/13C.png"
+dest_files=["res://.godot/imported/13C.png-1cf824e34f606ae98a81ca309d36dd11.ctex"]
 
 [params]
 
